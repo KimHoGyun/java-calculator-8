@@ -1,4 +1,5 @@
 package calculator;
+
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.ArrayList;
@@ -6,60 +7,71 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
-        System.out.println("입력할 문자열을 입력하시오\n");
+        System.out.println("입력할 문자열을 입력하시오");
         String input = Console.readLine();
-        try{
-            int result= add(input);
-            System.out.println("결과 : "+result);
 
-        }catch (IllegalArgumentException e){
-            System.out.println("오류 : "+ e.getMessage());
+        try {
+            int result = add(input);
+            System.out.println("결과: " + result);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("오류: " + e.getMessage());
         }
-
-
     }
+
     public static String[] splitNumber(String text) {
         String delimiter = ",|:";
-        String numbersText=text;
-        if(text.startsWith("//")){
+        String numbersText = text;
+
+        if (text.startsWith("//")) {
             Matcher matcher = Pattern.compile("//(.)\\\\n(.*)").matcher(text);
-            if(matcher.matches()){
+            if (matcher.matches()) {
                 delimiter = Pattern.quote(matcher.group(1));
                 numbersText = matcher.group(2);
             }
         }
+
         return numbersText.split(delimiter);
     }
-    public static int add(String input){
-        if(input==null||input.isEmpty()){
+
+    public static int add(String input) {
+        if (input == null || input.isEmpty()) {
             return 0;
         }
-        String[] numbers=splitNumber(input);
+
+        String[] numbers = splitNumber(input);
         return sum(numbers);
     }
-    public static int sum(String[] numbers){
+
+    public static int sum(String[] numbers) {
         int sum = 0;
         List<Integer> negativeNumbers = new ArrayList<>();
-        for(String numberStr : numbers){
-            if(numberStr.trim().isEmpty()){
+
+        for (String numberStr : numbers) {
+            if (numberStr.trim().isEmpty()) {
                 continue;
             }
-            try{
+
+            try {
                 int number = Integer.parseInt(numberStr.trim());
-                if(number < 0){
+                if (number < 0) {
                     negativeNumbers.add(number);
                     continue;
                 }
                 sum += number;
-            }catch (NumberFormatException e){
-                throw new IllegalArgumentException("잘못된 숫자 형식이 입력되었습니다:" + numberStr,e);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(
+                        "잘못된 숫자 형식이 입력되었습니다: " + numberStr, e);
             }
         }
-        if(!negativeNumbers.isEmpty()){
-            throw new IllegalArgumentException("음수는 입력 할 수 없습니다" + negativeNumbers);
+
+        if (!negativeNumbers.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "음수는 입력할 수 없습니다: " + negativeNumbers);
         }
+
         return sum;
     }
 }
