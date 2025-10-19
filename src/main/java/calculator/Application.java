@@ -17,7 +17,7 @@ public class Application {
             System.out.println("결과 : " + result);
 
         } catch (IllegalArgumentException e) {
-            System.out.println("오류: " + e.getMessage());
+
         }
     }
 
@@ -62,14 +62,12 @@ public class Application {
                 }
                 sum += number;
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException(
-                        "잘못된 숫자 형식이 입력되었습니다: " + numberStr, e);
+                throw new IllegalArgumentException();
             }
         }
 
         if (!negativeNumbers.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "음수는 입력할 수 없습니다: " + negativeNumbers);
+            throw new IllegalArgumentException();
         }
 
         return sum;
