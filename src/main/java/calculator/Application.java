@@ -17,7 +17,7 @@ public class Application {
             System.out.println("결과 : " + result);
 
         } catch (IllegalArgumentException e) {
-
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -57,8 +57,7 @@ public class Application {
             try {
                 int number = Integer.parseInt(numberStr.trim());
                 if (number < 0) {
-                    negativeNumbers.add(number);
-                    continue;
+                    throw new IllegalArgumentException("잘못");
                 }
                 sum += number;
             } catch (NumberFormatException e) {
