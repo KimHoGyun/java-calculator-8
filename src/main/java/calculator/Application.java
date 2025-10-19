@@ -24,7 +24,7 @@ public class Application {
         String delimiter = ",|:";
         String numbersText=text;
         if(text.startsWith("//")){
-            Matcher matcher = Pattern.compile("//(.)\n(.*)").matcher(text);
+            Matcher matcher = Pattern.compile("//(.)\\\\n(.*)").matcher(text);
             if(matcher.matches()){
                 delimiter = Pattern.quote(matcher.group(1));
                 numbersText = matcher.group(2);
@@ -50,6 +50,7 @@ public class Application {
                 int number = Integer.parseInt(numberStr.trim());
                 if(number < 0){
                     negativeNumbers.add(number);
+                    continue;
                 }
                 sum += number;
             }catch (NumberFormatException e){
